@@ -1,4 +1,4 @@
-// Copyright (c) Jeff Kluge. All rights reserved.
+// Copyright (c) Jeff Kluge.
 //
 // Licensed under the MIT license.
 

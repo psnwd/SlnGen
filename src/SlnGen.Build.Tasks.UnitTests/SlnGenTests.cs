@@ -1,4 +1,4 @@
-﻿// Copyright (c) Jeff Kluge. All rights reserved.
+﻿// Copyright (c) Jeff Kluge.
 //
 // Licensed under the MIT license.
 
@@ -185,29 +185,6 @@ namespace SlnGen.Build.Tasks.UnitTests
             targetOutput.Key.ShouldBe("SlnGen");
         }
 
-        [Fact]
-        public void SolutionItems()
-        {
-            Dictionary<string, string> solutionItems = new Dictionary<string, string>
-            {
-                { "foo", Path.GetFullPath("foo") },
-                { "bar", Path.GetFullPath("bar") },
-            };
-
-            IBuildEngine buildEngine = new MockBuildEngine();
-
-            SlnGen slnGen = new SlnGen
-            {
-                BuildEngine = buildEngine,
-                SolutionItems = solutionItems.Select(i => new MockTaskItem(i.Key)
-                {
-                    { "FullPath", i.Value },
-                }).ToArray<ITaskItem>(),
-            };
-
-            slnGen.GetSolutionItems(path => true).ShouldBe(solutionItems.Values);
-        }
-
         private static void ValidateParseCustomProjectTypeGuids(string fileExtension, string projectTypeGuid, string expectedFileExtension, Guid expectedProjectTypeGuid)
         {
             ITaskItem[] customProjectTypeGuids =
@@ -223,7 +200,7 @@ namespace SlnGen.Build.Tasks.UnitTests
 
         private static void ValidateParseCustomProjectTypeGuids(ITaskItem[] customProjectTypeGuids, string expectedFileExtension, Guid expectedProjectTypeGuid)
         {
-            Dictionary<string, Guid> actualProjectTypeGuids = SlnProject.GetCustomProjectTypeGuids(customProjectTypeGuids);
+            Dictionary<string, Guid> actualProjectTypeGuids = SlnProject.GetCustomProjectTypeGuids(customProjectTypeGuids.Select(i => new MSBuildTaskItem(i)));
 
             KeyValuePair<string, Guid> actualProjectTypeGuid = actualProjectTypeGuids.ShouldHaveSingleItem();
 

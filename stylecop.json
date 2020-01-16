@@ -9,7 +9,7 @@
     },
     "documentationRules": {
       "companyName": "Jeff Kluge",
-      "copyrightText": "Copyright (c) {companyName}. All rights reserved.\n\nLicensed under the MIT license.",
+      "copyrightText": "Copyright (c) {companyName}.\n\nLicensed under the MIT license.",
       "xmlHeader": false
     }
   }

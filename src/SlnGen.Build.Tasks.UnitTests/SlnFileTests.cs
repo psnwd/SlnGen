@@ -1,4 +1,4 @@
-﻿// Copyright (c) Jeff Kluge. All rights reserved.
+﻿// Copyright (c) Jeff Kluge.
 //
 // Licensed under the MIT license.
 
@@ -61,6 +61,52 @@ namespace SlnGen.Build.Tasks.UnitTests
         }
 
         [Fact]
+        public void SaveToCustomLocationCreatesDirectory()
+        {
+            DirectoryInfo directoryInfo = new DirectoryInfo(Path.Combine(TestRootPath, "1", "2", "3"));
+
+            directoryInfo.Exists.ShouldBeFalse();
+
+            string fullPath = Path.Combine(directoryInfo.FullName, Path.GetRandomFileName());
+
+            SlnFile slnFile = new SlnFile();
+
+            slnFile.Save(fullPath, useFolders: false);
+
+            File.Exists(fullPath).ShouldBeTrue();
+        }
+
+        [Fact]
+        public void SingleProject()
+        {
+            SlnProject projectA = new SlnProject(GetTempFileName(), "ProjectA", new Guid("C95D800E-F016-4167-8E1B-1D3FF94CE2E2"), new Guid("88152E7E-47E3-45C8-B5D3-DDB15B2F0435"), new[] { "Debug" }, new[] { "x64" }, isMainProject: true, isDeployable: false);
+
+            ValidateProjectInSolution(projectA);
+        }
+
+        [Fact]
+        public void SolutionItems()
+        {
+            var logger = new TestLogger();
+
+            var items = new IMSBuildItem[]
+            {
+                new MSBuildTaskItem(new MockTaskItem("foo")
+                {
+                    ["FullPath"] = Path.GetFullPath("foo"),
+                }),
+                new MSBuildTaskItem(new MockTaskItem("bar")
+                {
+                    ["FullPath"] = Path.GetFullPath("bar"),
+                }),
+            };
+
+            SlnFile.GetSolutionItems(items, logger, path => true).ShouldBe(items.Select(i => i.GetMetadata("FullPath")));
+
+            logger.LowImportanceMessages.ShouldBeEmpty();
+        }
+
+        [Fact]
         public void WithFolders()
         {
             SlnProject[] projects =
@@ -83,30 +129,6 @@ namespace SlnGen.Build.Tasks.UnitTests
             });
 
             ValidateProjectInSolution(action, projects, true);
-        }
-
-        [Fact]
-        public void SaveToCustomLocationCreatesDirectory()
-        {
-            DirectoryInfo directoryInfo = new DirectoryInfo(Path.Combine(TestRootPath, "1", "2", "3"));
-
-            directoryInfo.Exists.ShouldBeFalse();
-
-            string fullPath = Path.Combine(directoryInfo.FullName, Path.GetRandomFileName());
-
-            SlnFile slnFile = new SlnFile();
-
-            slnFile.Save(fullPath, useFolders: false);
-
-            File.Exists(fullPath).ShouldBeTrue();
-        }
-
-        [Fact]
-        public void SingleProject()
-        {
-            SlnProject projectA = new SlnProject(GetTempFileName(), "ProjectA", new Guid("C95D800E-F016-4167-8E1B-1D3FF94CE2E2"), new Guid("88152E7E-47E3-45C8-B5D3-DDB15B2F0435"), new[] { "Debug" }, new[] { "x64" }, isMainProject: true, isDeployable: false);
-
-            ValidateProjectInSolution(projectA);
         }
 
         private void ValidateProjectInSolution(Action<SlnProject, ProjectInSolution> customValidator, SlnProject[] projects, bool folders)
