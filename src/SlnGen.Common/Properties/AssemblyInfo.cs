@@ -5,3 +5,4 @@
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("SlnGen.Build.Tasks.UnitTests")]
+[assembly: InternalsVisibleTo("SlnGen.Common.UnitTests")]

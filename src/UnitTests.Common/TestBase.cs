@@ -7,7 +7,7 @@ using System;
 using System.IO;
 using System.Reflection;
 
-namespace SlnGen.Build.Tasks.UnitTests
+namespace SlnGen.UnitTests.Common
 {
     public abstract class TestBase : MSBuildTestBase
     {

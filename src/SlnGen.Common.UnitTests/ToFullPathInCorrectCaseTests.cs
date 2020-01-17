@@ -3,12 +3,11 @@
 // Licensed under the MIT license.
 
 using Shouldly;
-using SlnGen.Common;
 using System;
 using System.IO;
 using Xunit;
 
-namespace SlnGen.Build.Tasks.UnitTests
+namespace SlnGen.Common.UnitTests
 {
     public class ToFullPathInCorrectCaseTests
     {

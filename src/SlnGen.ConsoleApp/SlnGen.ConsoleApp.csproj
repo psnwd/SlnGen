@@ -6,21 +6,17 @@
     <ServerGarbageCollection Condition="'$(TargetFramework)' == 'netcoreapp2.1'">true</ServerGarbageCollection>
     <CompileDependsOn>GenerateAssemblyVersionInfo;$(CompileDependsOn)</CompileDependsOn>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="McMaster.Extensions.CommandLineUtils" />
     <PackageReference Include="Microsoft.Build" ExcludeAssets="Runtime" />
     <PackageReference Include="Microsoft.Build.Locator" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\SlnGen.Common\SlnGen.Common.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <None Include="App.config" Condition="'$(TargetFramework)' == 'net472'" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Update="Strings.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -28,7 +24,6 @@
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
   </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Update="Strings.resx">
       <Generator>ResXFileCodeGenerator</Generator>

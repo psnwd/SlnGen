@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace SlnGen.Build.Tasks.UnitTests
+namespace SlnGen.UnitTests.Common
 {
     public class TestLogger : ISlnGenLogger
     {

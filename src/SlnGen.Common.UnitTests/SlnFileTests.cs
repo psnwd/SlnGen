@@ -4,14 +4,14 @@
 
 using Microsoft.Build.Construction;
 using Shouldly;
-using SlnGen.Common;
+using SlnGen.UnitTests.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Xunit;
 
-namespace SlnGen.Build.Tasks.UnitTests
+namespace SlnGen.Common.UnitTests
 {
     public class SlnFileTests : TestBase
     {
@@ -87,9 +87,9 @@ namespace SlnGen.Build.Tasks.UnitTests
         [Fact]
         public void SolutionItems()
         {
-            var logger = new TestLogger();
+            TestLogger logger = new TestLogger();
 
-            var items = new IMSBuildItem[]
+            IMSBuildItem[] items = new IMSBuildItem[]
             {
                 new MSBuildTaskItem(new MockTaskItem("foo")
                 {
@@ -116,7 +116,7 @@ namespace SlnGen.Build.Tasks.UnitTests
                 new SlnProject(GetTempFileName(), "ProjectC", new Guid("00C5B0C0-E19C-48C5-818D-E8CD4FA2A915"), new Guid("F38341C3-343F-421A-AE68-94CD9ADCD32F"), new[] { "Debug" }, new[] { "x64" }, isMainProject: false, isDeployable: false),
             };
 
-            var action = new Action<SlnProject, ProjectInSolution>((s, p) =>
+            Action<SlnProject, ProjectInSolution> action = new Action<SlnProject, ProjectInSolution>((s, p) =>
             {
                 if (s.IsMainProject)
                 {

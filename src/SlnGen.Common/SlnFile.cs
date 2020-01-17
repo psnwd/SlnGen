@@ -169,49 +169,49 @@ namespace SlnGen.Common
                 writer.WriteLine("	EndGlobalSection");
             }
 
-            //writer.WriteLine("	GlobalSection(SolutionConfigurationPlatforms) = preSolution");
+            writer.WriteLine("	GlobalSection(SolutionConfigurationPlatforms) = preSolution");
 
-            //HashSet<string> allPlatforms = new HashSet<string>(_projects.SelectMany(i => i.Platforms).OrderBy(i => i), StringComparer.OrdinalIgnoreCase);
-            //HashSet<string> allConfigurations = new HashSet<string>(_projects.SelectMany(i => i.Configurations), StringComparer.OrdinalIgnoreCase);
+            HashSet<string> allPlatforms = new HashSet<string>(_projects.SelectMany(i => i.Platforms).OrderBy(i => i), StringComparer.OrdinalIgnoreCase);
+            HashSet<string> allConfigurations = new HashSet<string>(_projects.SelectMany(i => i.Configurations), StringComparer.OrdinalIgnoreCase);
 
-            //foreach (string configuration in allConfigurations)
-            //{
-            //    foreach (string platform in allPlatforms.Where(i => !string.Equals(i, "Win32", StringComparison.OrdinalIgnoreCase)))
-            //    {
-            //        if (!string.IsNullOrWhiteSpace(configuration) && !string.IsNullOrWhiteSpace(platform))
-            //        {
-            //            writer.WriteLine($"		{configuration}|{platform} = {configuration}|{platform}");
-            //        }
-            //    }
-            //}
+            foreach (string configuration in allConfigurations)
+            {
+                foreach (string platform in allPlatforms.Where(i => !string.Equals(i, "Win32", StringComparison.OrdinalIgnoreCase)))
+                {
+                    if (!string.IsNullOrWhiteSpace(configuration) && !string.IsNullOrWhiteSpace(platform))
+                    {
+                        writer.WriteLine($"		{configuration}|{platform} = {configuration}|{platform}");
+                    }
+                }
+            }
 
-            //writer.WriteLine("	EndGlobalSection");
+            writer.WriteLine("	EndGlobalSection");
 
-            //writer.WriteLine("	GlobalSection(ProjectConfigurationPlatforms) = postSolution");
-            //foreach (SlnProject project in _projects)
-            //{
-            //    foreach (string configuration in allConfigurations)
-            //    {
-            //        foreach (string platform in allPlatforms)
-            //        {
-            //            if (!string.IsNullOrWhiteSpace(configuration) && !string.IsNullOrWhiteSpace(platform))
-            //            {
-            //                if (project.Configurations.Contains(configuration) && project.Platforms.Contains(platform))
-            //                {
-            //                    writer.WriteLine($@"		{project.ProjectGuid.ToSolutionString()}.{configuration}|{platform}.ActiveCfg = {configuration}|{platform}");
-            //                    writer.WriteLine($@"		{project.ProjectGuid.ToSolutionString()}.{configuration}|{platform}.Build.0 = {configuration}|{platform}");
+            writer.WriteLine("	GlobalSection(ProjectConfigurationPlatforms) = postSolution");
+            foreach (SlnProject project in _projects)
+            {
+                foreach (string configuration in allConfigurations)
+                {
+                    foreach (string platform in allPlatforms)
+                    {
+                        if (!string.IsNullOrWhiteSpace(configuration) && !string.IsNullOrWhiteSpace(platform))
+                        {
+                            if (project.Configurations.Contains(configuration) && project.Platforms.Contains(platform))
+                            {
+                                writer.WriteLine($@"		{project.ProjectGuid.ToSolutionString()}.{configuration}|{platform}.ActiveCfg = {configuration}|{platform}");
+                                writer.WriteLine($@"		{project.ProjectGuid.ToSolutionString()}.{configuration}|{platform}.Build.0 = {configuration}|{platform}");
 
-            //                    if (project.IsDeployable)
-            //                    {
-            //                        writer.WriteLine($@"		{project.ProjectGuid.ToSolutionString()}.{configuration}|{platform}.Deploy.0 = {configuration}|{platform}");
-            //                    }
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
+                                if (project.IsDeployable)
+                                {
+                                    writer.WriteLine($@"		{project.ProjectGuid.ToSolutionString()}.{configuration}|{platform}.Deploy.0 = {configuration}|{platform}");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
-            //writer.WriteLine("	EndGlobalSection");
+            writer.WriteLine("	EndGlobalSection");
 
             writer.WriteLine("EndGlobal");
         }

@@ -6,9 +6,9 @@ using Microsoft.Build.Construction;
 using Microsoft.Build.Evaluation;
 using System.Collections.Generic;
 
-namespace SlnGen.Build.Tasks.UnitTests
+namespace SlnGen.UnitTests.Common
 {
-    internal static class MockProject
+    public static class MockProject
     {
         public static Project Create(string fullPath, IDictionary<string, string> globalProperties)
         {
